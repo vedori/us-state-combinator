@@ -1,0 +1,7 @@
+---
+# This config currently has the state alongside its gdp and population
+California:
+  abbreviation: ca
+  gdp: 4_103_124
+  population: 39_431_263
+---
