@@ -1,7 +1,8 @@
 # Crawls wikipedia for each state to populate state_config.yaml
 # The script will clear the file and repopulate it
 # TODO: Detect if state is already in yaml and leave it
-import requests
+import pywikibot
+from pywikibot import textlib
 
 headers = {
     "Content-Type": "application/json",
@@ -9,61 +10,11 @@ headers = {
     "Accept-Language": "en",
 }
 
-US_STATES: list[str] = [
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "Florida",
-    "Georgia",
-    "Hawaii",
-    "Idaho",
-    "Illinois",
-    "Indiana",
-    "Iowa",
-    "Kansas",
-    "Kentucky",
-    "Louisiana",
-    "Maine",
-    "Maryland",
-    "Massachusetts",
-    "Michigan",
-    "Minnesota",
-    "Mississippi",
-    "Missouri",
-    "Montana",
-    "Nebraska",
-    "Nevada",
-    "New_Hampshire",
-    "New_Jersey",
-    "New_Mexico",
-    "New_York",
-    "North_Carolina",
-    "North_Dakota",
-    "Ohio",
-    "Oklahoma",
-    "Oregon",
-    "Pennsylvania",
-    "Rhode_Island",
-    "South_Carolina",
-    "South_Dakota",
-    "Tennessee",
-    "Texas",
-    "Utah",
-    "Vermont",
-    "Virginia",
-    "Washington",
-    "West_Virginia",
-    "Wisconsin",
-    "Wyoming",
-]
+site = pywikibot.Site("wikipedia:en")
 
 
 def get_state_info(state: str):
-    url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{state}"
-    response = requests.get(url=url, headers=headers)
-    return response.text
+    state_page = pywikibot.Page(site, state)
+    sect = textlib.extract_sections(state_page.text, site)
+
+    pass
