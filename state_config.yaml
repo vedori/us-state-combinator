@@ -1,7 +1,18 @@
 ---
-# This config currently has the state alongside its gdp and population
-California:
-  abbreviation: ca
-  gdp: 4_103_124
-  population: 39_431_263
+# This config currently has the state alongside its abbreviation, gdp and population
+# Each state has multiple counties/cities that  also have a gdp and population count
+# ALL data is from 2023
+# The unit of GDP is a thousand 2017 USD, for example, 1000 would represent 1 million 2017 USD
+
+Virginia:
+  abbreviation: va
+  gdp: 595259641
+  population: 8734685
+  # Some cities and counties will be grouped  as singular economic units as per the census data
+  gdp_groups:
+
+  counties:
+    Accomack County:
+      gdp: 1527485
+      population: 33288
 ---
