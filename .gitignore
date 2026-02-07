@@ -12,6 +12,9 @@ wheels/
 # Test Files
 ignoreme.py
 
+# Data Files
+data/processed/
+
 # Dependency generated files
 ## pywikibot
 throttle.ctrl

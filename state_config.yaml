@@ -8,7 +8,7 @@ Virginia:
   abbreviation: va
   gdp: 595259641
   population: 8734685
-  # Some cities and counties will be grouped  as singular economic units as per the census data
+  # Some cities and counties will be grouped as singular economic units
   gdp_groups:
 
   counties:

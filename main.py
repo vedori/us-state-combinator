@@ -1,5 +1,9 @@
+import state_combiner
+
+
 def main():
-    print("Hello from us-state-combiner!")
+    c = state_combiner.StateConfigCreator()
+    c.write_config_to_file()
 
 
 if __name__ == "__main__":
