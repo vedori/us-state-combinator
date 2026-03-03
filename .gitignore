@@ -9,11 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
-# Test Files
-ignoreme.py
-
 # Data Files
 data/processed/
+data/final/
 
 # Dependency generated files
 ## pywikibot
