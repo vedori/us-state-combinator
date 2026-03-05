@@ -1,8 +1,8 @@
-import state_combiner
+from utils import csv_utils
 
 
 def main():
-    c = state_combiner.StateConfigCreator()
+    c = csv_utils.StateConfigCreator()
     c.write_config_to_file()
 
 
