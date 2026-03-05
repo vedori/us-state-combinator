@@ -6,6 +6,8 @@ from typing import Final
 
 from us_states import US_STATES
 
+type MergedEntryList = list[dict[str, str | int]]
+
 
 @dataclass(frozen=True, order=True)
 class CSVEntry:
@@ -35,6 +37,8 @@ class GDPGroupedEntry(CSVEntry):
 
 
 GDP_COMBINATION_SEPERATOR: Final = " + "
+STATE_DATA_FILE_NAME = "state_data.json"
+GDP_GROUP_DATA_FILE_NAME = "state_data.json"
 
 # All relevant paths
 data_path: Path = Path.cwd() / "data"
@@ -44,6 +48,8 @@ final_data_path: Path = data_path / "final"
 population_csv_file: Path = raw_data_path / "2020-pop.csv"
 gdp_csv_file: Path = raw_data_path / "2020-gdp.csv"
 
+state_data_file: Path = final_data_path / STATE_DATA_FILE_NAME
+gdp_group_data_file: Path = final_data_path / GDP_GROUP_DATA_FILE_NAME
 
 # A dictionary of gdp group names to their respective gdp
 gdp_group_table: dict[str, int] = dict()
@@ -151,7 +157,7 @@ class StateConfigCreator:
         """
         Merges gdp and population county csv data
         """
-        merged_entry_list: list[dict[str, str | int]] = []
+        merged_entry_list: MergedEntryList = []
 
         population_list = CSVReader(population_csv_file).population_entry_list()
 
@@ -208,9 +214,10 @@ class StateConfigCreator:
         # removes the state field from individual counties
         # This will reflect the way it will be stored in the final configuration
         # It will then be written to a file
-        states = list(US_STATES.keys())
-        all_states: dict[str, dict[str, str | list[dict[str, str | int]]]] = {
-            s: {"abbreviation": US_STATES.get(s, ""), "counties": []} for s in states
+        states = US_STATES
+
+        all_states: dict[str, dict[str, str | MergedEntryList]] = {
+            s: {"counties": []} for s in states
         }
         for c in county_data:
             state = c.pop("state")
@@ -227,7 +234,7 @@ class StateConfigCreator:
 
         # Writes state data
         with open(
-            final_data_path / "state_data.json",
+            state_data_file,
             mode="w",
             encoding="utf8",
         ) as config_file:
@@ -235,7 +242,7 @@ class StateConfigCreator:
 
         # Seperate file in final data path for GDP groups
         with open(
-            final_data_path / "gdp_groups.json",
+            gdp_group_data_file,
             mode="w",
             encoding="utf8",
         ) as config_file:
