@@ -38,7 +38,7 @@ class GDPGroupedEntry(CSVEntry):
 
 GDP_COMBINATION_SEPERATOR: Final = " + "
 STATE_DATA_FILE_NAME = "state_data.json"
-GDP_GROUP_DATA_FILE_NAME = "state_data.json"
+GDP_GROUP_DATA_FILE_NAME = "gdp_groups.json"
 
 # All relevant paths
 data_path: Path = Path.cwd() / "data"

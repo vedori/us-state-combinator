@@ -5,10 +5,11 @@ from utils import csv_utils
 
 # Immutable
 # Represents what a county should have
-# It should have a name population
+# It should have a name, state and population
 @dataclass(frozen=True, order=True)
 class BaseCounty:
     name: str
+    state: str
     population: int
 
 
@@ -33,12 +34,27 @@ class GDPGroupedCounty(BaseCounty):
         return gdp
 
 
+@dataclass()
+class State:
+    counties: set[BaseCounty] = field(default_factory=set, compare=False, hash=False)
+
+
 # A country class contains all valid states and is in charge of organizing them into custom states
 # A country initializes all states and uses all their counties to form custom states
 # A country will default to naming the super state after the state with the most gdp prefixed with
 # "Super", for example, a super-state of Ohio and Indiana would be called "Super Ohio"
+@dataclass()
 class Country:
-    pass
+    counties: set[BaseCounty] = field(default_factory=set, compare=False, hash=False)
+    states: set[BaseCounty] = field(default_factory=set, compare=False, hash=False)
+
+    def _config_exists(self) -> bool:
+        return csv_utils.state_data_file.exists()
+
+    def init_counties(self):
+        if not self._config_exists():
+            csv_utils.StateConfigCreator.write_config_to_file()
+        print("hi")
 
 
 # The main mutable component of this program
